@@ -196,7 +196,7 @@ w : Affiche les utilisateurs connectés et leurs tâches en cours
 
 ```
 lshw -class Processor -json
-``` 
+```  
 
 **5. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl ?
 Comment afficher tout ce qu’il s’est passé sur la machine lors de l’avant-dernier boot ?**
