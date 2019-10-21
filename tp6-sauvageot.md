@@ -84,7 +84,6 @@ keymap fr
 ```
 ## Exercice 2. Noyau
 
-Dans cet exercice, nous allons aborder le partitionnement LVM, beaucoup plus flexible pour manipuler les disques et les partitions.
 
 **1. Commencez par installer le paquet build-essential, qui contient tous les outils nécessaires (compilateurs, bibliothèques) à la compilation de programmes en C (entre autres).**
 
@@ -92,7 +91,7 @@ j'ai fait la commande `apt install build-essential`
 
 **2. Créez un fichier hello.c contenant le code suivant**
 
-j'ai fait `touch hello.c` 
+`touch hello.c` 
 
 **3.  Créez également un fichier Makefile**
 ``` 
@@ -117,16 +116,13 @@ install.**
 
 **5. Chargez le module ; vérifiez dans le journal du noyau que le message ”La fonction init_module() est appelée” a bien été inscrit, synonyme que le module a été chargé ; confirmez avec la commande lsmod**
 
-insmod
+j'ai fait `modprobe -a hello.ko`
 
 **6. Utilisez la commande modinfo pour obtenir des informations sur le module hello.ko ; vous devriez notamment voir les informations figurant dans le fichier C.**
 
-j'ai fait fdisk `/dev/mapper/volume1-1vData` puis `mkfs.ext4 /dev/mapper/volume1-1vData`
-j'ai rajouté dans le fstab la ligne `/dev/mapper/volume1-1vData      /data            ext4     defaults     0       0` 
-
 **7. Déchargez le module ; vérifiez dans le journal du noyau que le message ”La fonction cleanup_module() est appelée” a bien été inscrit, synonyme que le module a été déchargé ; confirmez avec la commande lsmod.**
 
-Fait
+modprobe -r hello.ko
 
 **8. Pour que le module soit chargé automatiquement au démarrage du système, il faut l’inscrire dans le fichier /etc/modules. Essayez, et vérifiez avec la commande lsmod après redémarrage de la machine.**
 
