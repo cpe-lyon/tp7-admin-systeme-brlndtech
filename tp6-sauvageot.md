@@ -96,16 +96,17 @@ j'ai fait `touch hello.c`
 
 **3.  Créez également un fichier Makefile**
 ``` 
+nano Makefile
 obj-m += hello.o
 
 all:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 
 clean:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 
 install:
-cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc 
+    cp ./hello.ko /lib/modules/$(shell uname -r)/kernel/drivers/misc 
 
 ```
 
@@ -138,7 +139,7 @@ j'ai fait la commande  `vgextend volume1 /dev/sdc1`
 **1. . Commencez par écrire un script qui recopie dans un fichier tmp.txt chaque ligne saisie au clavier par
 l’utilisateur**
 
-j'ai fait 
+
 ``` 
 #!/bin/bash
 while :; do
@@ -149,14 +150,17 @@ done
 
 **2. Lancez votre script et appuyez sur CTRL+Z. Que se passe-t-il ? Comment faire pour que le script poursuive son exécution ?**
 
-la commande `CTRL+Z` met le sript en pause. <br>
-j'ai fait `fg k` pour que ça reprenne 
+```
+Le script est mis en pause.
+Pour le relancer il faut faire fg <num>, num étant le numéro affiché quand on suspend le script
+```
 
 **3. Toujours pendant l’exécution du script, appuyez sur CTRL+C. Que se passe-t-il ?**
 
-Il s'est arreté 
+Il s'est arreté, car on assassiné son éxécution 
 
 **4. Modifiez votre script pour redéfinir les actions à effectuer quand le script reçoit les signaux SIGTSTP (= CTRL+Z) et SIGINT (=CTRL+C) : dans le premier cas, il doit afficher ”Impossible de me placer en arrière-plan”, et dans le second cas, il doit afficher  "OK, je fais un peu de ménage avant" avant de supprimer le fichier temporaire et terminer le script.**
+
 j'ai fait 
 ``` 
 trap 'echo impossible de me placer en arrière-plan !' TSTP
@@ -164,20 +168,35 @@ trap 'echo OK, je fais juste un peu de ménage avant ; exit' INT
 trap 'rm tmp.txt' EXIT
 ``` 
 
-**5.Testez le nouveau comportement de votre script en utilisant d’une part les raccourcis clavier, d’autre
-part la commande kill**
 
 **6. Relancez votre script et faites immédiatement un CTRL+C : vous obtenez un message d’erreur vous indiquant que le fichier tmp.txt n’existe pas. A l’aide de la commande interne test, corrigez votre script pour que ce message n’apparaisse plus.**
+```
+trap 'if [ -e tmp.txt ]; then rm tmp.txt; fi' EXIT
+```
 
 ## Exercice 4. Surveillance de l’activité du système
 
 **1. Dans tty1, lancez la commande htop, puis tapez la commande w dans tty2. Qu’affiche cette commande ?**
+```
+apt install htop
+w : Affiche les utilisateurs connectés et leurs tâches en cours
+```
 
 **2. Comment afficher l’historique des dernières connexions à la machine ?**
 
+``` last -i 
+```
+
 **3. Quelle commande permet d’obtenir la version du noyau ?**
 
+```uname -a 
+```
+
 **4. Comment récupérer toutes les informations sur le processeur, au format JSON ?**
+
+```
+lshw -class Processor -json
+``` 
 
 **5. Comment obtenir la liste des derniers démarrages de la machine avec la commande journalctl ?
 Comment afficher tout ce qu’il s’est passé sur la machine lors de l’avant-dernier boot ?**
